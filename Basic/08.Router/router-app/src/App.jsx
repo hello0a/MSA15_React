@@ -9,7 +9,7 @@ import Login from './pages/Login'
 import Admin from './pages/Admin'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-// ⚠ import 안되어 있으면 defined 오류 발생!
+// ⚠ import 안되어 있으면 defined 오류 발생!!
 function App() {
   // state
   const [isLogin, setLogin] = useState(false)
