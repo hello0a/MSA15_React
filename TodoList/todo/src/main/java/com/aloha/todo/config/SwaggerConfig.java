@@ -1,0 +1,29 @@
+package com.aloha.todo.config;
+
+import org.springdoc.core.models.GroupedOpenApi;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+
+@Configuration
+public class SwaggerConfig {
+    @Bean
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+            // 그룹명 설정
+            .group("aloha")
+            // api 명세서가 적용될 경로 설정
+            .pathsToMatch( "/todos/**")
+            .build();
+    }
+    @Bean
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+            .info(new Info().title("Test Project API")
+                .description("Test 프로젝트 API 입니다")
+                .version("v0.0.1")
+        );   
+    }
+}
