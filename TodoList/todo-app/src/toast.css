@@ -1,0 +1,96 @@
+.toast {
+  position: fixed;
+
+  /* 화면 상단 중앙 */
+  top: 20px;
+  left: 50%;
+
+  /* 기본 위치 (중앙 정렬) */
+  transform: translateX(-50%);
+
+  /* ⭐ 디자인 */
+  background: plum;          /* 배경 plum */
+  color: white;              /* 글씨 흰색 */
+  font-weight: 700;          /* 굵게 */
+  font-size: 16px;
+
+  border: 2px solid plum;
+  border-radius: 14px;
+
+  padding: 10px 22px;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+
+  z-index: 10000;
+
+  /* 성능 최적화 (애니메이션 부드럽게) */
+  will-change: transform, opacity;
+
+  /* 슬라이드 */
+  /* animation: toast-slide 0.35s ease; */
+
+  /* 아이폰 알람처럼 */
+  /* animation: toast-pop 0.35s ease; */
+}
+
+/* ============================= */
+/* ⭐ 등장 애니메이션 (아이폰 알림 느낌) */
+/* ============================= */
+
+.toast-enter {
+  animation: toast-pop 0.35s ease forwards;
+}
+
+@keyframes toast-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -12px) scale(0.85);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1.05); /* 살짝 크게 */
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1); /* 자연스럽게 안정 */
+  }
+}
+
+
+/* ============================= */
+/* ⭐ 사라질 때 (톡! 들어가는 느낌) */
+/* ============================= */
+
+.toast-exit {
+  animation: toast-out 0.25s ease forwards;
+}
+
+@keyframes toast-out {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  40% {
+    transform: translate(-50%, 0) scale(1.05); /* 살짝 다시 커졌다가 */
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.75); /* 제자리에서 쏙 들어감 */
+  }
+}
+
+/* 등장 애니메이션 - slide */
+/* @keyframes toast-slide {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+} */

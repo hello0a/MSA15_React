@@ -1,0 +1,55 @@
+.petals-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* 🎉 종이 조각 */
+.petal {
+  position: absolute;
+  top: -20px;
+  opacity: 0;
+
+  border-radius: 2px;   /* 꽃잎 → 종이 느낌 */
+  transform: translateX(0) translateY(0) rotate(var(--rot));
+
+  animation: confetti-fall 10s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 좌우 흔들림 */
+.petal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  animation: confetti-sway var(--swayDur) ease-in-out infinite;
+}
+
+/* 떨어지는 애니메이션 */
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) rotate(var(--rot));
+  }
+  10% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1; /* ✅ 거의 끝까지 안 사라지게 */
+  }
+  100% {
+    opacity: 0; /* ✅ 바닥 도착 직후 사라짐 */
+    transform:
+      translateX(calc(var(--drift) * 1.2))
+      translateY(calc(110vh + 120px))   /* ✅ 무조건 화면 하단 넘어가게 */
+      rotate(calc(var(--rot) + 1080deg));
+  }
+}
+
+/* 살짝 흔들림 */
+@keyframes confetti-sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}

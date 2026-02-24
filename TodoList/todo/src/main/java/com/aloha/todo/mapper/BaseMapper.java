@@ -3,12 +3,12 @@ package com.aloha.todo.mapper;
 import java.util.List;
 
 public interface BaseMapper<E> {
-    public List<E> list();
-    public E select(Long no);
-    public E selectById(String id);
-    public int insert(E entity);
-    public int update(E entity);
-    public int updateById(E entity);
-    public int delete(E entity);
-    public int deleteById(E entity);
+  public List<E> list();
+  public E select(Long no);
+  public E selectById(String id);
+  public int insert(E entity);
+  public int update(E entity);
+  public int updateById(E entity);
+  public int delete(Long no);
+  public int deleteById(String id);
 }
