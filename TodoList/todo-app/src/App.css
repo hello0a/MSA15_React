@@ -241,6 +241,13 @@ ul {margin: 0; padding: 0; list-style-type: none;}
   color: #7a9bd4;
   margin: 0;
 }
+
+.page-info {
+  display: flex;
+  /* justify-content: center; */
+  padding: 5px;
+  gap: 10px;
+}
 /* body {
     background: linear-gradient(
         -45deg,

@@ -12,6 +12,8 @@ const Container = () => {
   const [input, setInput] = useState('')    // input: 문자열 ''
   const [todoList, setTodoList] = useState([])  // todoList: 배열 []
   const [loading, setLoading] = useState(true)  // 초기값 true
+  const [initialPagination, setInitialPagination] = useState(null) // 초기 페이지 정보
+  const [listKey, setListKey] = useState(0) // List 컴포넌트 리셋하기 위한 key
   const [celebrate, setCelebrate] = useState(false)  // 꽃잎
   const [toast, setToast] = useState(false) // toast
 
@@ -31,6 +33,7 @@ const Container = () => {
         // data.list: 할 일 목록
         // data.pagination: 페이지 정보
         setTodoList( data.list )  // 3. state 저장 -> 렌더링 다시 실행(자동) (React 핵심 코드: state 바뀌면 자동 렌더링)
+        setInitialPagination( data.pagination)
       })
       .catch( error => {
         console.error('error: ', error);
@@ -79,6 +82,8 @@ const Container = () => {
         console.log('할 일 등록 성공')
         // 할 일 목록 요청
         getList()
+        // List 컴포넌트 리셋
+        setListKey(prev => prev + 1)
         // 입력 값 비우기
         setInput('')
       } else {
@@ -233,10 +238,13 @@ const Container = () => {
       <Header />
       <Input input={input} onChange={onChange} onSubmit={onSubmit} />
       <List 
+        key={listKey}
         todoList={todoList}
         onToggle={onToggle}
         onRemove={onRemove}
         loading={loading}
+        getList={getList}
+        initialPagination={initialPagination}
       />
       <Footer onCompleteAll = {onCompleteAll} onRemoveAll={onRemoveAll} />
     </div>
