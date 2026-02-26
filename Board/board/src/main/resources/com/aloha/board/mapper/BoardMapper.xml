@@ -20,13 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Boards" id="BoardMap">
     <!-- SQL 결과를 Boards 객체로 만들겠다! -->
         <id property="no" column="no" />
-        <result property="no" column="no" />
         <result property="id" column="id" />
         <result property="title" column="title" />
         <result property="writer" column="writer" />
         <result property="content" column="content" />
         <result property="createdAt" column="created_at" />
         <result property="updatedAt" column="updated_at" />
+        <association property="file" column="id" javaType="Files" select="selectMainFile"></association>
+        <collection property="fileList" column="id" ofType="Files" select="fileList"></collection>
     </resultMap>
     <!-- 게시글 목록 -->
     <select id="list" resultMap="BoardMap">
@@ -84,6 +85,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM boards
         WHERE id = #{id}
     </delete>
+
+    <select id="selectMainFile" resultType="Files">
+        SELECT * FROM files WHERE p_id = #{id} AND type = 'MAIN'
+    </select>
+    <select id="fileList" resultType="Files">
+        SELECT * FROM files WHERE p_id = #{id} AND type = 'SUB'
+    </select>
 </mapper>
 <!-- MyBatis 실행 순서
     Mapper -> XML -> SQL -> 객체 -->

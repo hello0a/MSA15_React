@@ -1,6 +1,8 @@
 package com.aloha.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aloha.board.domain.Boards;
+import com.aloha.board.domain.Files;
+import com.aloha.board.domain.Pagination;
 import com.aloha.board.service.BoardService;
+import com.aloha.board.service.FileService;
+import com.github.pagehelper.PageInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +41,25 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
     
     private final BoardService boardService;
+    private final FileService fileService;
 
     // 리스트 조회
     @GetMapping()
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> getAll(
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+        Pagination pagination
+    ) {
         try {
-            List<Boards> list = boardService.list();
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            PageInfo<Boards> pageInfo = boardService.page(page, size);
+            pagination.setPage(page);
+            pagination.setSize(size);
+            pagination.setTotal(pageInfo.getTotal());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("list", pageInfo.getList());
+            response.put("pagination", pagination);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("****error", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -99,4 +118,39 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * 게시글 첨부 파일 목록
+     * -> /boards/{id}/files
+     * @param param
+     * @return
+     */
+    @GetMapping("{id}/files")
+    public ResponseEntity<?> boardFileList(
+        @PathVariable("id") String id,
+        @RequestParam(value = "type", required = false) String type
+    ) {
+        try {
+            Files file = new Files();
+            file.setPId(id);
+            file.setType(type);
+            // type 없을 때 -> 부모 기준 모든 파일
+            if( type == null ){
+                List<Files> list = fileService.listByParent(file);
+                return new ResponseEntity<>(list, HttpStatus.OK);
+            }
+            // type: "MAIN" -> 메인 파일 1개
+            if( type.equals("MAIN") ) {
+                Files mainFile = fileService.selectByType(file);
+                return new ResponseEntity<>(mainFile, HttpStatus.OK);
+            } else {
+                // type: "SUB", ? -> 타입별 파일 목록
+                List<Files> list = fileService.listByType(file);
+                return new ResponseEntity<>(list, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 }
