@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" --> 
+<mapper namespace="com.aloha.board.mapper.BoardMapper">
+
+    <!-- resultMap 
+    : DB 컬럼 -> Java 객체 필드 매핑 규칙   (snake_case -> camelCase 연결해주는 지도)
+    언제 쓰는가?
+    : 컬럼 이름과 필드 이름 다를 때!
+    ex) createdAt <-> created_at 
+    : JOIN 할 때 (대다수) 
+    : 객체 안에 객체 있을 때
+    ex) Board { List<Comment> comments ~} -> nested 구조 
+    언제 안 쓰는가?
+    : 컬럼 이름과 필드 이름 동일할 때 -> MyBatis 자동 매핑
+    : 단순 조회 할 때 -->
+    <resultMap type="Boards" id="BoardMap">
+    <!-- SQL 결과를 Boards 객체로 만들겠다! -->
+        <id property="no" column="no" />
+        <result property="no" column="no" />
+        <result property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="writer" column="writer" />
+        <result property="content" column="content" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+    <!-- 게시글 목록 -->
+    <select id="list" resultMap="BoardMap">
+        SELECT *
+        FROM boards
+        ORDER BY no DESC
+    </select>
+    <!-- 게시글 조회 -->
+    <select id="select" resultMap="BoardMap">
+        SELECT *
+        FROM boards
+        WHERE no = #{no}
+    </select>
+    <select id="selectById" resultMap="BoardMap">
+        SELECT *
+        FROM boards
+        WHERE id = #{id}
+    </select>
+    <!-- 게시글 등록 -->
+    <!-- 자동증가된(AI) boards 의 no 를 Boards 객체의 no 변수에 넣어준다. -->
+    <!-- parametertype : SQL에 전달되는 Java 객체 타입
+        useGeneratedKeys: DB가 자동 생성한 PK(ato increment) 가져와라
+        keyProperty: 생성된 PK 값을 객체의 어떤 변수에 넣을지-->
+    <insert id="insert" parameterType="Boards" useGeneratedKeys="true" keyProperty="no">
+        INSERT INTO boards ( id, title, writer, content )
+        VALUES ( #{id}, #{title}, #{writer}, #{content} )
+    </insert>
+    <!-- 게시글 수정 -->
+    <update id="update">
+        UPDATE boards
+            <set>
+                <if test="title != null">title = #{title},</if>
+                <if test="writer != null">writer = #{writer},</if>
+                <if test="content != null">content = #{content},</if>
+                updated_at = now()
+            </set>
+        WHERE no = #{no}
+    </update>
+    <update id="updateById">
+        UPDATE boards
+            <set>
+                <if test="title != null">title = #{title},</if>
+                <if test="writer != null">writer = #{writer},</if>
+                <if test="content != null">content = #{content},</if>
+                updated_at = now()
+            </set>
+        WHERE id = #{id}
+    </update>
+    <!-- 게시글 삭제 -->
+    <delete id="delete">
+        DELETE FROM boards
+        WHERE no = #{no}
+    </delete>
+    <delete id="deleteById">
+        DELETE FROM boards
+        WHERE id = #{id}
+    </delete>
+</mapper>
+<!-- MyBatis 실행 순서
+    Mapper -> XML -> SQL -> 객체 -->
