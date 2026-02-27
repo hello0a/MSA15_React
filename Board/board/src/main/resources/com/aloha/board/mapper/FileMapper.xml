@@ -36,13 +36,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update">
         UPDATE files
         <set>
-            <if text="type != null"> type = #{type}, </if>
-            <if text="seq != null"> seq = #{seq}, </if>
-            <if text="pId != null"> p_id = #{pId}, </if>
-            <if text="fileName != null"> file_name = #{fileName}, </if>
-            <if text="originName != null"> origin_name = #{originName}, </if>
-            <if text="filePath != null"> file_path = #{filePath}, </if>
-            <if text="fileSize != null"> file_size = #{fileSize}, </if>
+            <if test="type != null"> type = #{type}, </if>
+            <if test="seq != null"> seq = #{seq}, </if>
+            <if test="pId != null"> p_id = #{pId}, </if>
+            <if test="fileName != null"> file_name = #{fileName}, </if>
+            <if test="originName != null"> origin_name = #{originName}, </if>
+            <if test="filePath != null"> file_path = #{filePath}, </if>
+            <if test="fileSize != null"> file_size = #{fileSize}, </if>
             updated_at = now()
         </set>
         WHERE no = #{no}
@@ -51,13 +51,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateById">
         UPDATE files
         <set>
-            <if text="type != null"> type = #{type}, </if>
-            <if text="seq != null"> seq = #{seq}, </if>
-            <if text="pId != null"> p_id = #{pId}, </if>
-            <if text="fileName != null"> file_name = #{fileName}, </if>
-            <if text="originName != null"> origin_name = #{originName}, </if>
-            <if text="filePath != null"> file_path = #{filePath}, </if>
-            <if text="fileSize != null"> file_size = #{fileSize}, </if>
+            <if test="type != null"> type = #{type}, </if>
+            <if test="seq != null"> seq = #{seq}, </if>
+            <if test="pId != null"> p_id = #{pId}, </if>
+            <if test="fileName != null"> file_name = #{fileName}, </if>
+            <if test="originName != null"> origin_name = #{originName}, </if>
+            <if test="filePath != null"> file_path = #{filePath}, </if>
+            <if test="fileSize != null"> file_size = #{fileSize}, </if>
             updated_at = now()
         </set>
         WHERE id = #{id}
