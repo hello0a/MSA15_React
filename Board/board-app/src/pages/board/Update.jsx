@@ -1,9 +1,13 @@
 import React from 'react'
+import Layout from '../../components/common/Layout'
+import Update from '../../components/board/Update'
 
-const Update = () => {
+const UpdatePage = () => {
   return (
-    <div>Update</div>
+    <Layout>
+      <Update />
+    </Layout>
   )
 }
 
-export default Update
+export default UpdatePage

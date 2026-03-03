@@ -1,9 +1,13 @@
 import React from 'react'
+import Layout from '../../components/common/Layout'
+import Read from '../../components/board/Read'
 
-const Read = () => {
+const ReadPage = () => {
   return (
-    <div>Read</div>
+    <Layout>
+      <Read />
+    </Layout>
   )
 }
 
-export default Read
+export default ReadPage

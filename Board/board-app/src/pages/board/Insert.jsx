@@ -5,7 +5,7 @@ import Insert from '../../components/board/Insert'
 const InsertPage = () => {
   return (
     <Layout>
-        <Insert />
+      <Insert />
     </Layout>
   )
 }

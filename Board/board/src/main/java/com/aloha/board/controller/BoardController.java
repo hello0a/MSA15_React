@@ -68,10 +68,20 @@ public class BoardController {
     
     // 상세 조회
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOne(@PathVariable("id") String id) {
+    public ResponseEntity<?> getOne(
+        @PathVariable("id") String id,
+        Files file
+    ) {
         try {
+            // 게시글
             Boards board = boardService.selectById(id);
-            return new ResponseEntity<>(board, HttpStatus.OK);
+            file.setPId(id);
+            // 파일 목록
+            List<Files> fileList = fileService.listByParent(file);
+            Map<String, Object> response = new HashMap<>();
+            response.put("board", board);
+            response.put("fileList", fileList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -142,6 +152,7 @@ public class BoardController {
             // type: "MAIN" -> 메인 파일 1개
             if( type.equals("MAIN") ) {
                 Files mainFile = fileService.selectByType(file);
+                log.info("*****MAIN", mainFile);
                 return new ResponseEntity<>(mainFile, HttpStatus.OK);
             } else {
                 // type: "SUB", ? -> 타입별 파일 목록

@@ -5,7 +5,7 @@ import List from '../../components/board/List'
 const ListPage = () => {
   return (
     <Layout>
-        <List />
+      <List />
     </Layout>
   )
 }

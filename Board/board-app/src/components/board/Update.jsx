@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { ImageIcon } from 'lucide-react'
 
-const Insert = () => {
+const Update = () => {
 
   const inputClass =
     `w-full px-3 py-2 text-sm border border-gray-200 rounded outline-none 
@@ -13,9 +13,9 @@ const Insert = () => {
   return (
     <form noValidate>
       <div className="flex items-center justify-center mb-5">
-        <h1 className='text-xl font-semibold text-gray-900 text-center'>글쓰기</h1>
+        <h1 className='text-xl font-semibold text-gray-900 text-center'>글수정</h1>
       </div>
-
+    
       <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100">
         {/* 제목 */}
         <div className="flex items-start gap-4 px-5 py-4">
@@ -122,4 +122,4 @@ const Insert = () => {
   )
 }
 
-export default Insert
+export default Update
