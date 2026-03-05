@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -88,12 +89,42 @@ public class BoardController {
     }
     
     // 게시글 등록
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody Boards board) {
+    @PostMapping(value = "", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<?> create(Boards board) {
         try {
             boolean result = boardService.insert(board);
             if (result) {
-                return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
+                return new ResponseEntity<>(board, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 게시글 등록
+    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createMultipartForm(Boards board) {
+        try {
+            boolean result = boardService.insert(board);
+            if (result) {
+                return new ResponseEntity<>(board, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 게시글 등록
+    // @RequestBody 붙일 때 json, xml
+    // @RequestBody 안 붙일 때 multipart/form-data, x-www-from-urlencoded
+    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createJSON(@RequestBody Boards board) {
+        try {
+            boolean result = boardService.insert(board);
+            if (result) {
+                return new ResponseEntity<>(board, HttpStatus.CREATED);
             }
             return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -102,8 +133,34 @@ public class BoardController {
     }
     
     // 게시글 수정
-    @PutMapping()
-    public ResponseEntity<?> update(@RequestBody Boards board) {
+    @PutMapping(value = "", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<?> update(Boards board) {
+        try {
+            boolean result = boardService.updateById(board);
+            if (result) {
+                return new ResponseEntity<>(board, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    // 게시글 수정
+    @PutMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateMultipartForm(Boards board) {
+        try {
+            boolean result = boardService.updateById(board);
+            if (result) {
+                return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    // 게시글 수정
+    @PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateJSON(@RequestBody Boards board) {
         try {
             boolean result = boardService.updateById(board);
             if (result) {

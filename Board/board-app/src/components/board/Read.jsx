@@ -5,11 +5,14 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useBoard from '../../hooks/useBoard'
 import FileItem from '../common/FileItem'
+import { usefileDownload } from '../../hooks/useFileDownload'
+import { formatDate } from '../../utils/format'
 
 const Read = () => {
 
   const { id } = useParams()
   const { board, fileList, isLoading, isError } = useBoard(id)
+  const { download } = usefileDownload()
 
   return (
     <div>
@@ -19,7 +22,7 @@ const Read = () => {
         <div className="flex items-center gap-3 text-sm text-gray-400">
           <span>{board?.writer}</span>
           <span>.</span>
-          <span>{board?.createdAt}</span>
+          <span>{ formatDate(board?.createdAt)}</span>
         </div>
       </div>
 
@@ -46,6 +49,7 @@ const Read = () => {
                   <FileItem
                     key={file.id}
                     file={file}
+                    onDownload={ download }
                   />
                 ))
               }
@@ -66,7 +70,7 @@ const Read = () => {
         </Link>
 
         <Link
-          to="/boards/update/:id"
+          to={`/boards/update/${id}`}
           className='inline-flex items-center gap-1.5 px-5 py-2 text-sm font-medium text-white bg-blue-500
                       rounded-lg hover:bg-blue-600 transition-colors'     
         >
