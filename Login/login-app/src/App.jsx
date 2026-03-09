@@ -9,19 +9,22 @@ import Join from './pages/Join'
 import User from './pages/User'
 import About from './pages/About'
 import Admin from './pages/Admin'
+import LoginContextProvider from './contexts/LoginContextProvider'
 
 function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/join' element={<Join />} />
-        <Route path='/user' element={<User />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/admin' element={<Admin />} />
-      </Routes>
+      <LoginContextProvider>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/join' element={<Join />} />
+          <Route path='/user' element={<User />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/admin' element={<Admin />} />
+        </Routes>
+     </LoginContextProvider>
     </BrowserRouter>    
   )
 }
