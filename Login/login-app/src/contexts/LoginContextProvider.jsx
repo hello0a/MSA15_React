@@ -29,6 +29,8 @@ const LoginContextProvider = ({ children }) => {
             Cookies.set('jwt', jwt, { expires: 5 })
 
             // 로그인 상태 설정
+            loginSetting(data)
+            
             Swal.alert('로그인 성공', '메인 화면으로 이동합니다.', 'success',
                 () => navigate('/')
             )
