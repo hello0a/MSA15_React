@@ -1,50 +1,72 @@
 import React from 'react'
 
-const UserForm = () => {
+const UserForm = ({ userInfo, updateUser, deleteUser }) => {
+
+  const onUpdate = (e) => {
+    e.preventDefault()
+    const form = e.target
+    const username = form.username.value
+    const password = form.password.value
+    const name = form.name.value
+    const email = form.email.value
+
+    updateUser( { username, password, name, email } )
+  }
+
   return (
     <div className="form">
-        <h2 className='login-title'>회원 정보</h2>
-        <form className="login-form">
-            <div>
-                <label htmlFor="username">username</label>
-                <input type="text" 
-                    id='username'
-                    placeholder='username'
-                    autoComplete='username'
-                    required
-                    readOnly
-                />
-            </div>
-            <div>
-                <label htmlFor="password">password</label>
-                <input type="text" 
-                    id='password'
-                    placeholder='password'
-                    autoComplete='password'
-                    required
-                />
-            </div>
-            <div>
-                <label htmlFor="name">name</label>
-                <input type="text" 
-                    id='name'
-                    placeholder='name'
-                    autoComplete='name'
-                    required
-                />
-            </div>
-            <div>
-                <label htmlFor="email">email</label>
-                <input type="text" 
-                    id='email'
-                    placeholder='email'
-                    autoComplete='email'
-                    required
-                />
-            </div>
-            <button type='submit' className='btn btn--form btn-login'>정보수정</button>
-            <button className='btn btn--form btn-login'>회원 탈퇴</button>
-        </form>
+      <h2 className='login-title'>회원 정보</h2>
+      <form className="login-form" onSubmit={ (e) => onUpdate(e) }>
+        <div>
+          <label htmlFor="username">username</label>
+          <input type="text"
+                id='username'
+                placeholder='username'
+                autoComplete='username'
+                required
+                readOnly
+                defaultValue={ userInfo?.username }
+          />
+        </div>
+        <div>
+          <label htmlFor="password">password</label>
+          <input type="password"
+                id='password'
+                placeholder='password'
+                autoComplete='password'
+                required
+          />
+        </div>
+        <div>
+          <label htmlFor="name">name</label>
+          <input type="text"
+                id='name'
+                placeholder='name'
+                autoComplete='name'
+                required
+                defaultValue={ userInfo?.name }
+          />
+        </div>
+        <div>
+          <label htmlFor="email">email</label>
+          <input type="text"
+                id='email'
+                placeholder='email'
+                autoComplete='email'
+                required
+                defaultValue={ userInfo?.email }
+          />
+        </div>
+        
+        <button type='submit' className='btn btn--form btn-login'>
+          정보 수정
+        </button>
+        <button className='btn btn--form btn-login'
+                onClick={ () => deleteUser( userInfo.username )}>
+          회원 탈퇴
+        </button>
+
+      </form>
     </div>
   )
 }

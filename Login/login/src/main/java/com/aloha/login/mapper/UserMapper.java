@@ -19,4 +19,7 @@ public interface UserMapper {
     public int deleteAuth(String username) throws Exception;
     // 회원 삭제
     public int delete(String username) throws Exception;
+
+    // 카카오
+    public Object findByKakaoId(Long kakaoId);
 }

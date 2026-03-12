@@ -41,6 +41,7 @@ const LoginForm = () => {
                     required
                 />
             </div>
+            <button><img src="/img/kakao_login.png" alt="" /></button>
             <button type='submit' className='btn btn--form btn-login'>로그인</button>
         </form>
     </div>

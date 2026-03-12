@@ -18,6 +18,7 @@ public class Users {
     private Date updatedAt;
     private Boolean enabled;
     private List<UserAuth> authList;
+    
     public Users() {
         this.id = UUID.randomUUID().toString();
     }
