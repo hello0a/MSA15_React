@@ -41,7 +41,9 @@ const LoginForm = () => {
                     required
                 />
             </div>
-            <button><img src="/img/kakao_login.png" alt="" /></button>
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=f2ed4a90721b0e3ebb8a6a6132c84b2a&redirect_uri=http://localhost:8080/login/kakao/callback&response_type=code">
+                <img src="/src/img/kakao_login.png" alt="카카오 로그인" />
+            </a>
             <button type='submit' className='btn btn--form btn-login'>로그인</button>
         </form>
     </div>

@@ -1,5 +1,7 @@
 package com.aloha.login.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.aloha.login.domain.UserAuth;
@@ -20,6 +22,7 @@ public interface UserMapper {
     // 회원 삭제
     public int delete(String username) throws Exception;
 
-    // 카카오
-    public Object findByKakaoId(Long kakaoId);
+    // ⭐ 추가 - kakao
+    public Users selectByProviderAndProviderId(String provider, String providerId);
+    List<UserAuth> selectAuthByUsername(String username);
 }

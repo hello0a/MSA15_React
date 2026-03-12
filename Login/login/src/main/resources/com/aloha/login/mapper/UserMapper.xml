@@ -77,4 +77,17 @@
         DELETE FROM users
          WHERE username = #{username}
     </delete>
+
+    <!-- kakao -->
+    <select id="selectByProviderAndProviderId" resultType="Users">
+        SELECT *
+        FROM users
+        WHERE provider = #{provider}
+        AND provider_id = #{providerId}
+    </select>
+    <select id="selectAuthByUsername" resultType="UserAuth">
+        SELECT *
+        FROM user_auth
+        WHERE username = #{username}
+    </select>
 </mapper>

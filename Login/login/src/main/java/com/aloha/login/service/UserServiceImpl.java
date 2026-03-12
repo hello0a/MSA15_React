@@ -67,10 +67,4 @@ public class UserServiceImpl implements UserService {
     // 2. 회원 삭제 (부모 테이블)
     return userMapper.delete(username) > 0;
   }
-
-
-  @Override
-  public Users findByKakaoId(Long kakaoId) throws Exception {
-      return userMapper.findByKakaoId(kakaoId);
-  }
 }

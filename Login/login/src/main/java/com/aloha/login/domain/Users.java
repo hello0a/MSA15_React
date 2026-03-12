@@ -4,9 +4,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
+@AllArgsConstructor
 public class Users {
     private Long no;
     private String id;
@@ -14,6 +18,10 @@ public class Users {
     private String password;
     private String name;
     private String email;
+
+    private String provider;
+    private String providerId;
+    
     private Date createdAt;
     private Date updatedAt;
     private Boolean enabled;

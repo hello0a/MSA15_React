@@ -1,4 +1,4 @@
--- Active: 1767840773547@@127.0.0.1@3306@aloha
+-- Active: 1770210803187@@127.0.0.1@3306@aloha
 DROP TABLE IF EXISTS `user_auth`;
 DROP TABLE IF EXISTS `users`;
 
@@ -9,6 +9,9 @@ CREATE TABLE `users` (
     password    VARCHAR(100) NOT NULL COMMENT "비밀번호",
     name        VARCHAR(100) NULL COMMENT "이름",
     email       VARCHAR(100) NULL COMMENT "이메일",
+    provider    VARCHAR(20) COMMENT "kakao/naver/google/local",
+    provider_id VARCHAR(100) COMMENT "소셜 사용자 고유ID",
+    UNIQUE KEY uk_provider (provider, provider_id) COMMENT "중복방지",
     created_at  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT "등록일자",
     updated_at  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT "수정일자",
     enabled     BOOLEAN NULL DEFAULT TRUE COMMENT "활성화여부"
@@ -22,6 +25,10 @@ CREATE TABLE `user_auth` (
 
 TRUNCATE `user_auth`;
 TRUNCATE `users`;
+
+-- kakao 로그인
+INSERT INTO `users` (id, username, password, name, email, provider, provider_id)
+VALUES (UUID(), 'kakao_12345678', '$2a$10$CNcBaLcB7YOpNNCL8pyipOgtbDGBjC02JKVuKiPWGNXXqwdfZy/Qu', '홍길동', 'test@test.com', 'kakao', '12345678');
 
 -- 관리자 권한 계정
 INSERT INTO `users` ( id, username, password, name, email )

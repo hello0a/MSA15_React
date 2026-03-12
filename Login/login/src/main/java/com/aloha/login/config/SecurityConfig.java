@@ -52,7 +52,8 @@ public class SecurityConfig {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         // [개선] URL 권한 규칙 추가
         http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.POST, "/login").permitAll()     // 로그인
+            // .requestMatchers(HttpMethod.POST, "/login").permitAll()     // 로그인
+            .requestMatchers( "/login/**").permitAll()     // 로그인 + 카카오
             .requestMatchers(HttpMethod.POST, "/users").permitAll()     // 회원가입
             .requestMatchers(HttpMethod.GET, "/users/info").authenticated()  // 회원 정보
             .requestMatchers(HttpMethod.PUT, "/users").authenticated()       // 회원 수정

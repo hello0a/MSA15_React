@@ -50,7 +50,7 @@ public class JwtProvider {
                         .expiration( new Date( System.currentTimeMillis() + exp ) ) //
                         .claim("id", id)
                         .claim("username", username)
-                        .claim("rol", roles)
+                        .claim("roles", roles)
                         .compact(); // - 여기까지 payload 설정 ( 객체 정보, 토큰생성 시간 iat )
         log.info("jwt : " + jwt);
         return jwt;
