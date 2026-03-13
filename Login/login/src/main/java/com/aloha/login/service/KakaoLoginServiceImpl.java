@@ -1,6 +1,7 @@
 package com.aloha.login.service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -61,8 +62,10 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
 
         // 4. 회원 없으면 가입
         if ( user == null ) {
-            user = Users.builder()
+            user = Users.builder()  // not null 포함시키기
+                        .id(UUID.randomUUID().toString())
                         .username(username)
+                        .password("")   // password 필요 없음
                         .email(email)
                         .provider("kakao")
                         .providerId(String.valueOf(kakaoId))

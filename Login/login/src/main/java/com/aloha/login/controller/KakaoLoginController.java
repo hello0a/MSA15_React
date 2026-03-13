@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+// @Controller
 @RequestMapping("/login")
 @RequiredArgsConstructor
 public class KakaoLoginController {
@@ -22,9 +23,28 @@ public class KakaoLoginController {
     // callback 역할
     // Redirect URI 경로와 일치!
     @GetMapping("/kakao/callback")
+    // public LoginResponse kakaoLogin(@RequestParam("code") String code) throws Exception {
     public LoginResponse kakaoLogin(@RequestParam("code") String code) throws Exception {
         log.info("인가코드: {}", code);
         return kakaoLoginService.kakaoLogin(code);
+        
+        // LoginResponse response = kakaoLoginService.kakaoLogin(code);
+        // String username = response.getUsername();
+
+        // // 권한 생성
+        // List<GrantedAuthority> authorities = 
+        //     List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        // // 인증 객체 생성
+        // Authentication authentication =
+        //     new UsernamePasswordAuthenticationToken(username, null, authorities);
+        // // SecurityContext에 저장
+        // SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // 토큰 가져오기
+        // String token = response.getToken().getAccessToken();
+
+        // 홈으로 이동
+        // return "redirect:/users/info?token=" + token;
     }
 }
 /**

@@ -3,6 +3,7 @@ package com.aloha.login.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.aloha.login.domain.UserAuth;
 import com.aloha.login.domain.Users;
@@ -23,6 +24,6 @@ public interface UserMapper {
     public int delete(String username) throws Exception;
 
     // ⭐ 추가 - kakao
-    public Users selectByProviderAndProviderId(String provider, String providerId);
+    public Users selectByProviderAndProviderId(@Param("provider") String provider, @Param("providerId") String providerId);
     List<UserAuth> selectAuthByUsername(String username);
 }

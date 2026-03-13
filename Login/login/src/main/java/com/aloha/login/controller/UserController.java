@@ -38,6 +38,7 @@ public class UserController {
       if( user != null ) {
           return new ResponseEntity<>(user, HttpStatus.OK);
       }
+      
       return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
   }
   @PostMapping("")

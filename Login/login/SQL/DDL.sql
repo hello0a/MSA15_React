@@ -1,4 +1,4 @@
--- Active: 1770210803187@@127.0.0.1@3306@aloha
+-- Active: 1767840773547@@127.0.0.1@3306@aloha
 DROP TABLE IF EXISTS `user_auth`;
 DROP TABLE IF EXISTS `users`;
 
@@ -26,10 +26,6 @@ CREATE TABLE `user_auth` (
 TRUNCATE `user_auth`;
 TRUNCATE `users`;
 
--- kakao 로그인
-INSERT INTO `users` (id, username, password, name, email, provider, provider_id)
-VALUES (UUID(), 'kakao_12345678', '$2a$10$CNcBaLcB7YOpNNCL8pyipOgtbDGBjC02JKVuKiPWGNXXqwdfZy/Qu', '홍길동', 'test@test.com', 'kakao', '12345678');
-
 -- 관리자 권한 계정
 INSERT INTO `users` ( id, username, password, name, email )
 VALUES ( UUID(), 'admin', 
@@ -42,3 +38,5 @@ VALUES
     ( 'admin', 'ROLE_USER' ),
     ( 'admin', 'ROLE_ADMIN' )
 ;
+
+SELECT * FROM `users`;

@@ -42,10 +42,11 @@
         FROM user_auth
         WHERE username = #{username}
     </select>
-    <!-- 회원 가입 -->
+    <!-- 회원 가입 
+    provider, providerId 추가 -->
     <insert id="join">
-        INSERT INTO users ( id, username, password, name, email )
-        VALUES ( #{id}, #{username}, #{password}, #{name}, #{email} )
+        INSERT INTO users ( id, username, password, name, email, provider, provider_id )
+        VALUES ( #{id}, #{username}, #{password}, #{name}, #{email}, #{provider}, #{providerId} )
     </insert>
     <!-- 회원 수정 -->
     <update id="update">
@@ -79,13 +80,13 @@
     </delete>
 
     <!-- kakao -->
-    <select id="selectByProviderAndProviderId" resultType="Users">
+    <select id="selectByProviderAndProviderId" resultMap="userMap">
         SELECT *
         FROM users
         WHERE provider = #{provider}
         AND provider_id = #{providerId}
     </select>
-    <select id="selectAuthByUsername" resultType="UserAuth">
+    <select id="selectAuthByUsername" resultMap="authMap">
         SELECT *
         FROM user_auth
         WHERE username = #{username}
